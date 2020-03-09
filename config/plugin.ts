@@ -13,4 +13,9 @@ plugin.sequelize = {
   enable: true,
 };
 
+plugin.routerPlus = {
+  enable: true,
+  package: 'egg-router-plus',
+};
+
 export default plugin;
