@@ -12,4 +12,5 @@ export default (app: Application) => {
   // 用户
   apiV1Router.get('/user/:loginname', user.show);
   // apiV1Router.post('/accesstoken', tokenRequired, user.verify);
+  apiV1Router.post('/register', user.signup);
 };

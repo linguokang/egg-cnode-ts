@@ -24,6 +24,15 @@ export default (appInfo: EggAppInfo) => {
     password: '123456',
   };
 
+  config.security = {
+    xframe: {
+      enable: false,
+    },
+    csrf: {
+      enable: false,
+    },
+  };
+
   // the return config will combines to EggAppConfig
   return {
     ...config,

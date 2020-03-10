@@ -1,5 +1,6 @@
 import { Controller } from 'egg';
 import * as _ from 'lodash';
+import validator from 'validator';
 
 
 export default class UserController extends Controller {
@@ -33,6 +34,64 @@ export default class UserController extends Controller {
     ctx.body = {
       success: true,
       data,
+    };
+  }
+
+  async signup() {
+    const { ctx } = this;
+    const loginname = validator.trim(ctx.request.body.loginname || '').toLowerCase();
+    const email = validator.trim(ctx.request.body.email || '').toLowerCase();
+    const pass = validator.trim(ctx.request.body.pass || '');
+    const rePass = validator.trim(ctx.request.body.re_pass || '');
+
+    let msg;
+    // 验证信息的正确性
+    if ([ loginname, pass, rePass, email ].some(item => {
+      return item === '';
+    })) {
+      msg = '信息不完整。';
+    } else if (loginname.length < 5) {
+      msg = '用户名至少需要5个字符。';
+    } else if (!ctx.helper.validateId(loginname)) {
+      msg = '用户名不合法。';
+    } else if (!validator.isEmail(email)) {
+      msg = '邮箱不合法。';
+    } else if (pass !== rePass) {
+      msg = '两次密码输入不一致。';
+    }
+    // END 验证信息的正确性
+
+    if (msg) {
+      ctx.status = 404;
+      ctx.body = {
+        success: true,
+        error_msg: msg,
+      };
+    }
+
+    const users = await ctx.service.user.getUsersByQuery(loginname, email);
+
+    if (users.length > 0) {
+      ctx.status = 422;
+      ctx.body = {
+        success: true,
+        error_msg: '用户名或邮箱已被使用。',
+        // loginname,
+        // email,
+      };
+      return;
+    }
+
+    const passhash = ctx.helper.bhash(pass);
+
+    // create gravatar
+    const avatarUrl = ctx.service.user.makeGravatar(email);
+
+    await ctx.service.user.newAndSave(loginname, passhash, email, avatarUrl, false);
+
+    ctx.body = {
+      success: true,
+      msg: '注册成功',
     };
   }
 }
