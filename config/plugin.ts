@@ -18,4 +18,19 @@ plugin.routerPlus = {
   package: 'egg-router-plus',
 };
 
+plugin.passport = {
+  enable: true,
+  package: 'egg-passport',
+};
+
+plugin.passportGithub = {
+  enable: true,
+  package: 'egg-passport-github',
+};
+
+plugin.passportLocal = {
+  enable: true,
+  package: 'egg-passport-local',
+};
+
 export default plugin;

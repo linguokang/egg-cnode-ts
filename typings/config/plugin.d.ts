@@ -16,6 +16,9 @@ import 'egg-jsonp';
 import 'egg-view';
 import 'egg-sequelize';
 import 'egg-router-plus';
+import 'egg-passport';
+import 'egg-passport-github';
+import 'egg-passport-local';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -33,5 +36,8 @@ declare module 'egg' {
     view?: EggPluginItem;
     sequelize?: EggPluginItem;
     routerPlus?: EggPluginItem;
+    passport?: EggPluginItem;
+    passportGithub?: EggPluginItem;
+    passportLocal?: EggPluginItem;
   }
 }

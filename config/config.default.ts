@@ -33,6 +33,18 @@ export default (appInfo: EggAppInfo) => {
     },
   };
 
+  config.passportGithub = {
+    key: process.env.EGG_PASSPORT_GITHUB_CLIENT_ID || 'test',
+    secret: process.env.EGG_PASSPORT_GITHUB_CLIENT_SECRET || 'test',
+  // callbackURL: '/passport/github/callback',
+  // proxy: false,
+  };
+
+  config.passportLocal = {
+    usernameField: 'name',
+    passwordField: 'pass',
+  };
+
   // the return config will combines to EggAppConfig
   return {
     ...config,
