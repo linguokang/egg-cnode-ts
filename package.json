@@ -37,7 +37,7 @@
     "mysql2": "^2.1.0",
     "utility": "^1.16.3",
     "uuid": "^7.0.2",
-    "validator": "^12.2.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",
